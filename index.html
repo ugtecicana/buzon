@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUZÓN ANÓNIMO UGT</title>
+    <title>Buzón Anónimo UGT - El Corte Inglés</title>
     <style>
         :root {
             --color-ugt: #b00000;
@@ -13,8 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Forzamos el color de fondo para que no cambie con el modo oscuro del móvil */
-            background-color: var(--bg-body) !important;
+            background: var(--bg-body);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,8 +23,7 @@
         }
 
         .contenedor {
-            /* Forzamos el fondo blanco de la tarjeta */
-            background: white !important;
+            background: white;
             padding: 35px;
             border-radius: 12px;
             width: 100%;
@@ -44,7 +42,7 @@
         }
 
         .logo-contenedor img {
-            width: 100%; 
+            width: 100%; /* Imagen a ancho completo */
             max-width: 100%; 
             height: auto;
             display: block;
@@ -52,17 +50,13 @@
 
         h1 {
             color: var(--color-ugt);
-            font-size: 26px;
-            font-weight: 800;
-            text-transform: uppercase; /* Forzado a mayúsculas */
-            letter-spacing: 1px;
+            font-size: 24px;
             margin-bottom: 25px;
         }
 
         p {
             font-size: 15px;
-            /* Forzamos texto oscuro para legibilidad en cualquier modo */
-            color: #333 !important;
+            color: #444;
             line-height: 1.6;
             margin-bottom: 18px;
             text-align: left;
@@ -76,12 +70,9 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             resize: none;
-            /* Tamaño de fuente 16px para evitar zoom automático en móviles */
-            font-size: 16px; 
+            font-size: 15px;
             box-sizing: border-box;
             display: block;
-            background-color: white !important;
-            color: black !important;
         }
 
         textarea:focus {
@@ -108,6 +99,11 @@
             background: #8e0000;
         }
 
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         #mensaje-exito {
             display: none;
             text-align: center;
@@ -125,13 +121,13 @@
 <div class="contenedor">
     <div id="formulario-contenedor">
         <div class="logo-contenedor">
-            <img src="UGT CANARIAS.jpg" alt="Logo UGT El Corte Inglés">
+            <img src="logo.png" alt="Logo UGT El Corte Inglés">
         </div>
 
         <h1>BUZÓN ANÓNIMO</h1>
         
         <p>
-            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
+            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
         </p>
 
         <p>
@@ -139,7 +135,7 @@
         </p>
 
         <p>
-            <strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Necesitamos personas que, como tú, conocen el día a día para <strong>defender nuestros derechos</strong>. Si quieres formar parte de nuestro equipo y <strong>dar un paso más</strong>, indícalo en tu mensaje.
+            <strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Necesitamos personas que, como tú, conocen el día a día del centro para <strong>defender nuestros derechos</strong>. Si quieres formar parte de nuestro equipo y <strong>dar un paso más</strong>, indícalo en tu mensaje.
         </p>
 
         <form id="buzon-form">
@@ -150,10 +146,10 @@
 
     <div id="mensaje-exito">
         <div class="logo-contenedor">
-            <img src="UGT CANARIAS.jpg" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
+            <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
         </div>
-        <h2>¡Mensaje enviado!</h2>
-        <p>Gracias por tu confianza. Tu mensaje ha sido recibido de forma anónima por la sección sindical.</p>
+        <h2>¡Mensaje enviado con éxito!</h2>
+        <p>Gracias por tu valentía y confianza. Tu mensaje ha sido recibido de forma totalmente anónima por la sección sindical.</p>
         <button onclick="location.reload()" style="background: #666; margin-top: 20px;">Enviar otro mensaje</button>
     </div>
 </div>
@@ -172,6 +168,7 @@
 
         const formData = new FormData(formulario);
         
+        // Uso de la API Fetch (AJAX) para enviar sin salir de la página
         fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
             method: "POST",
             body: formData,
@@ -181,8 +178,8 @@
         })
         .then(response => {
             if (response.ok) {
-                contenedorForm.style.display = 'none'; 
-                mensajeExito.style.display = 'block'; 
+                contenedorForm.style.display = 'none'; // Ocultamos el formulario
+                mensajeExito.style.display = 'block'; // Mostramos el éxito
             } else {
                 alert("Hubo un error al enviar. Inténtalo de nuevo.");
                 boton.disabled = false;
@@ -198,4 +195,6 @@
 </script>
 
 </body>
+
 </html>
+
