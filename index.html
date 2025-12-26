@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buzón Anónimo UGT - El Corte Inglés</title>
+    <meta name="color-scheme" content="light"> <!-- Fuerza modo claro en móviles -->
+    <title>Buzón Anónimo</title>
+
     <style>
         :root {
             --color-ugt: #b00000;
             --color-exito: #28a745;
             --bg-body: #f8f9fa;
+            color-scheme: light; /* Preferencia explícita */
+        }
+
+        html, body {
+            background-color: #ffffff !important; /* Evita modo oscuro automático */
+            color: #000000;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-body);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -42,8 +49,8 @@
         }
 
         .logo-contenedor img {
-            width: 100%; /* Imagen a ancho completo */
-            max-width: 100%; 
+            width: 100%;
+            max-width: 100%;
             height: auto;
             display: block;
         }
@@ -116,6 +123,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="contenedor">
@@ -125,18 +133,12 @@
         </div>
 
         <h1>BUZÓN ANÓNIMO</h1>
-        
-        <p>
-            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
-        </p>
 
-        <p>
-            Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.
-        </p>
+        <p>A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.</p>
 
-        <p>
-            <strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Necesitamos personas que, como tú, conocen el día a día del centro para <strong>defender nuestros derechos</strong>. Si quieres formar parte de nuestro equipo y <strong>dar un paso más</strong>, indícalo en tu mensaje.
-        </p>
+        <p>Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.</p>
+
+        <p><strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Si quieres formar parte de nuestro equipo e <strong>implicarte más</strong>, coméntalo en tu mensaje.</p>
 
         <form id="buzon-form">
             <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
@@ -149,8 +151,8 @@
             <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
         </div>
         <h2>¡Mensaje enviado con éxito!</h2>
-        <p>Gracias por tu valentía y confianza. Tu mensaje ha sido recibido de forma totalmente anónima por la sección sindical.</p>
-        <button onclick="location.reload()" style="background: #666; margin-top: 20px;">Enviar otro mensaje</button>
+        <p>Gracias por tu confianza. Tu mensaje ha sido recibido de forma totalmente anónima por la sección sindical.</p>
+        <button onclick="location.reload()" style="background:#666;margin-top:20px;">Enviar otro mensaje</button>
     </div>
 </div>
 
@@ -161,27 +163,23 @@
     const boton = document.getElementById('boton-enviar');
 
     formulario.addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        
+        e.preventDefault();
         boton.disabled = true;
         boton.innerText = "Protegiendo y enviando...";
 
         const formData = new FormData(formulario);
-        
-        // Uso de la API Fetch (AJAX) para enviar sin salir de la página
+
         fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
             method: "POST",
             body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
         })
         .then(response => {
             if (response.ok) {
-                contenedorForm.style.display = 'none'; // Ocultamos el formulario
-                mensajeExito.style.display = 'block'; // Mostramos el éxito
+                contenedorForm.style.display = 'none';
+                mensajeExito.style.display = 'block';
             } else {
-                alert("Hubo un error al enviar. Inténtalo de nuevo.");
+                alert("Hubo un error. Inténtalo otra vez.");
                 boton.disabled = false;
                 boton.innerText = "Enviar con Seguridad Total";
             }
@@ -195,6 +193,4 @@
 </script>
 
 </body>
-
 </html>
-
