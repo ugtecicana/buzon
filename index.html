@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzón Anónimo UGT - El Corte Inglés</title>
+    <style>
+        :root {
+            --color-ugt: #b00000;
+            --color-exito: #28a745;
+            --bg-body: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-body);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--color-ugt);
+            position: relative;
+        }
+
+        h1 {
+            color: var(--color-ugt);
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: none;
+            font-size: 15px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-ugt);
+            box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background: var(--color-ugt);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #8e0000;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Mensaje de éxito oculto por defecto */
+        #mensaje-exito {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #mensaje-exito h2 {
+            color: var(--color-exito);
+            font-size: 20px;
+        }
+
+        .nota {
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div id="formulario-contenedor">
+        <h1>Buzón Anónimo UGT</h1>
+        <p>Este canal es <strong>totalmente anónimo</strong>. No se recogen datos personales salvo que decidas incluirlos en el mensaje.</p>
+
+        <form id="buzon-form">
+            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+            <button type="submit" id="boton-enviar">Enviar Mensaje Anónimo</button>
+        </form>
+
+        <div class="nota">
+            Tu voz es importante para mejorar nuestras condiciones laborales.
+        </div>
+    </div>
+
+    <div id="mensaje-exito">
+        <h2>¡Mensaje enviado!</h2>
+        <p>Gracias por tu colaboración. Tu mensaje ha sido recibido de forma anónima por la sección sindical.</p>
+        <button onclick="location.reload()">Enviar otro mensaje</button>
+    </div>
+</div>
+
+<script>
+    const formulario = document.getElementById('buzon-form');
+    const contenedorForm = document.getElementById('formulario-contenedor');
+    const mensajeExito = document.getElementById('mensaje-exito');
+    const boton = document.getElementById('boton-enviar');
+
+    formulario.addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita que la página salte a FormSubmit
+        
+        boton.disabled = true;
+        boton.innerText = "Enviando...";
+
+        const formData = new FormData(formulario);
+        
+        // Enviamos los datos mediante la API Fetch (AJAX)
+        fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                contenedorForm.style.display = 'none'; // Ocultamos el formulario
+                mensajeExito.style.display = 'block'; // Mostramos el éxito
+            } else {
+                alert("Hubo un error al enviar. Inténtalo de nuevo.");
+                boton.disabled = false;
+                boton.innerText = "Enviar Mensaje Anónimo";
+            }
+        })
+        .catch(error => {
+            alert("Error de conexión. Inténtalo más tarde.");
+            boton.disabled = false;
+            boton.innerText = "Enviar Mensaje Anónimo";
+        });
+    });
+</script>
+
+</body>
+</html>
