@@ -42,7 +42,7 @@
         }
 
         .logo-contenedor img {
-            width: 100%; /* Imagen a ancho completo */
+            width: 100%;
             max-width: 100%; 
             height: auto;
             display: block;
@@ -139,7 +139,13 @@
         </p>
 
         <form id="buzon-form">
-            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+            <input type="hidden" name="_subject" value="Nuevo mensaje en el Buzón Anónimo UGT">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_language" value="es">
+
+            <textarea name="Mensaje_del_trabajador" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+            
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
         </form>
     </div>
@@ -168,7 +174,6 @@
 
         const formData = new FormData(formulario);
         
-        // Uso de la API Fetch (AJAX) para enviar sin salir de la página
         fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
             method: "POST",
             body: formData,
@@ -178,8 +183,8 @@
         })
         .then(response => {
             if (response.ok) {
-                contenedorForm.style.display = 'none'; // Ocultamos el formulario
-                mensajeExito.style.display = 'block'; // Mostramos el éxito
+                contenedorForm.style.display = 'none';
+                mensajeExito.style.display = 'block';
             } else {
                 alert("Hubo un error al enviar. Inténtalo de nuevo.");
                 boton.disabled = false;
@@ -195,5 +200,4 @@
 </script>
 
 </body>
-
 </html>
