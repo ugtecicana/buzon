@@ -1,72 +1,61 @@
 <!-- Uploadcare -->
 <script>
-    UPLOADCARE_PUBLIC_KEY = "TU_PUBLIC_KEY";         // ← pon tu clave aquí
-    UPLOADCARE_EFFECTS = "crop,rotate,enhance";       // mejoras básicas
-    UPLOADCARE_AUTO_STORE = false;                    // evita que se guarde indefinidamente
+  UPLOADCARE_PUBLIC_KEY = "14b5b87aed1dd83e54dc"; // tu public key válida
+  UPLOADCARE_EFFECTS = "crop,enhance";
 </script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
-<style>
-    .uploadcare-widget button {
-        background:#b00000 !important;
-        color:white !important;
-        border-radius:6px;
-    }
-</style>
+<div id="formulario-contenedor">
+    <div class="logo-contenedor">
+        <img src="logo.png" alt="Logo UGT El Corte Inglés">
+    </div>
 
-<form id="buzon-form">
-    <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe tu situación o propuesta..." required></textarea>
+    <h1>BUZÓN ANÓNIMO</h1>
 
-    <!-- Subida opcional (pdf + imágenes) -->
-    <input 
-        type="hidden" 
-        role="uploadcare-uploader" 
-        name="archivo"
-        data-clearable="true"
-        data-multiple="false"
-        data-images-only="false"
-        data-accept="application/pdf,image/*"
-        data-multiple-max="1"
-        data-preview-step="true"
-    />
+    <form id="buzon-form">
+        <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
 
-    <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
-</form>
+        <label style="display:block;margin-top:15px;font-weight:bold;">Adjuntar archivo (opcional)</label>
+        <input type="hidden"
+               role="uploadcare-uploader"
+               name="archivo"
+               data-tabs="file camera"
+               data-multiple="false"
+               data-accept="application/pdf,image/*"
+               style="margin-top:10px;">
+
+        <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
+    </form>
+</div>
 
 <script>
-document.getElementById('buzon-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+const formulario = document.getElementById('buzon-form');
+const contenedorForm = document.getElementById('formulario-contenedor');
+const mensajeExito = document.getElementById('mensaje-exito');
+const boton = document.getElementById('boton-enviar');
 
-    const btn = document.getElementById("boton-enviar");
-    btn.disabled = true;
-    btn.innerText = "Protegiendo y enviando...";
-
-    const formData = new FormData(this);
-
-    // Límite de expiración de archivos a 30 días (43200 min)
-    const fileUrl = formData.get("archivo");
-
-    if (fileUrl) {
-        const uuid = fileUrl.split('/').filter(Boolean).pop();
-        
-        await fetch(`https://api.uploadcare.com/files/${uuid}/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Uploadcare.Simple TU_PUBLIC_KEY:TU_PRIVATE_KEY" // ⚠ requiere clave privada en servidor
-            },
-            body: JSON.stringify({ 
-                "metadata": { "expire-in": "30d" }
-            })
-        });
-    }
+formulario.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    boton.disabled = true;
+    boton.innerText = "Protegiendo y enviando...";
 
     fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
         method: "POST",
-        body: formData,
-        headers: { "Accept": "application/json" }
+        body: new FormData(formulario),
+        headers: { 'Accept': 'application/json' }
     })
-    .then(r => r.ok ? location.reload() : (alert("Error al enviar"), btn.disabled=false))
-    .catch(()=>{alert("Error de conexión"), btn.disabled=false});
+    .then(r => {
+        if(r.ok){
+            contenedorForm.style.display='none';
+            mensajeExito.style.display='block';
+        } else {
+            alert("Error al enviar");
+            boton.disabled=false; boton.innerText="Enviar con Seguridad Total";
+        }
+    })
+    .catch(()=>{
+        alert("Error de conexión");
+        boton.disabled=false; boton.innerText="Enviar con Seguridad Total";
+    });
 });
 </script>
