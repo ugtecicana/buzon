@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzón Anónimo UGT - El Corte Inglés</title>
+    <style>
+        :root {
+            --color-ugt: #b00000;
+            --color-exito: #28a745;
+            --bg-body: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-body);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 6px solid var(--color-ugt);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--color-ugt);
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            height: 160px;
+            margin-top: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-ugt);
+        }
+
+        .archivo {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .archivo label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .archivo small {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 16px;
+            background: var(--color-ugt);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        #mensaje-exito {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div id="formulario-contenedor">
+        <h1>BUZÓN ANÓNIMO</h1>
+
+        <p>
+            Este buzón es <strong>totalmente anónimo</strong>.  
+            No recolectamos datos personales ni identificativos.
+        </p>
+
+        <form id="buzon-form">
+            <textarea name="mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+
+            <!-- ADJUNTO -->
+            <div class="archivo">
+                <label>Adjuntar archivo (opcional)</label>
+                <input 
+                    type="file" 
+                    name="adjunto"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                >
+                <small>No adjuntes documentos con datos personales si no es necesario.</small>
+            </div>
+
+            <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
+        </form>
+    </div>
+
+    <div id="mensaje-exito">
+        <h2>¡Mensaje enviado con éxito!</h2>
+        <p>Gracias por tu confianza. El mensaje se ha recibido de forma anónima.</p>
+        <button onclick="location.reload()">Enviar otro mensaje</button>
+    </div>
+</div>
+
+<script>
+    const formulario = document.getElementById('buzon-form');
+    const contenedorForm = document.getElementById('formulario-contenedor');
+    const mensajeExito = document.getElementById('mensaje-exito');
+    const boton = document.getElementById('boton-enviar');
+
+    formulario.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        boton.disabled = true;
+        boton.innerText = "Protegiendo y enviando...";
+
+        const formData = new FormData(formulario);
+
+        fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                contenedorForm.style.display = 'none';
+                mensajeExito.style.display = 'block';
+            } else {
+                alert("Error al enviar el mensaje.");
+                boton.disabled = false;
+                boton.innerText = "Enviar con Seguridad Total";
+            }
+        })
+        .catch(() => {
+            alert("Error de conexión.");
+            boton.disabled = false;
+            boton.innerText = "Enviar con Seguridad Total";
+        });
+    });
+</script>
+
+</body>
+</html>
