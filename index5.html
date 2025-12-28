@@ -191,7 +191,7 @@
             
             <div class="seccion-adjunto">
                 <label>Adjuntar archivos <span class="opcional">(Opcional, permite varios)</span></label>
-                <input type="hidden" role="uploadcare-uploader" name="archivos_adjuntos" data-multiple="true" />
+                <input type="hidden" role="uploadcare-uploader" id="uploader-archivos" name="archivos_adjuntos" data-multiple="true" />
             </div>
 
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
@@ -220,15 +220,23 @@
         boton.disabled = true;
         boton.innerText = "Enviando de forma segura...";
 
-        // Obtenemos los datos del formulario de manera limpia
         const email = document.getElementById('email-usuario').value;
         const mensaje = document.getElementById('texto-mensaje').value;
         
-        // Obtenemos el valor del widget de Uploadcare (el link del grupo de archivos)
-        const infoArchivo = uploadcare.Widget('[role="uploadcare-uploader"]').value();
-        const linkArchivos = infoArchivo ? `https://ucarecdn.com/${infoArchivo}/` : "No se adjuntaron archivos";
+        // Obtener el widget correctamente
+        const widget = uploadcare.Widget('#uploader-archivos');
+        const infoGrupo = widget.value(); 
+        
+        // CORRECCIÓN: Si es un grupo, infoGrupo es un objeto. 
+        // Extraemos el UUID para formar el link correctamente.
+        let linkFinal = "No se adjuntaron archivos";
+        
+        if (infoGrupo) {
+            // Si es múltiple, el valor puede ser un objeto o el UUID seguido de ~ (número de archivos)
+            const uuid = infoGrupo.uuid || infoGrupo;
+            linkFinal = `https://ucarecdn.com/${uuid}/`;
+        }
 
-        // Preparamos el envío a Formspark
         fetch("https://submit-form.com/0WBaWkbEH", {
             method: "POST",
             headers: {
@@ -238,7 +246,7 @@
             body: JSON.stringify({
                 email: email || "Anónimo",
                 mensaje: mensaje,
-                archivos: linkArchivos
+                archivos: linkFinal
             })
         })
         .then(response => {
@@ -252,7 +260,7 @@
             }
         })
         .catch(error => {
-            alert("Error de conexión. Revisa tu internet.");
+            alert("Error de conexión.");
             boton.disabled = false;
             boton.innerText = "Enviar con Seguridad Total";
         });
