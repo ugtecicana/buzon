@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buzón Anónimo UGT - El Corte Inglés</title>
-
     <style>
         :root {
             --color-ugt: #b00000;
-            --color-exito: #28a745;
             --bg-body: #f8f9fa;
         }
 
@@ -28,180 +26,86 @@
             padding: 35px;
             border-radius: 12px;
             width: 100%;
-            max-width: 500px;
+            max-width: 550px; /* Un poco más ancho para el formulario de Tally */
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             border-top: 6px solid var(--color-ugt);
+            position: relative;
             text-align: center;
         }
 
         .logo-contenedor {
+            width: 100%;
             margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
         }
 
         .logo-contenedor img {
             width: 100%;
-            max-width: 100%;
+            max-width: 100%; 
             height: auto;
+            display: block;
         }
 
         h1 {
             color: var(--color-ugt);
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
         }
 
         p {
             font-size: 15px;
             color: #444;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             text-align: left;
         }
 
-        textarea {
-            width: 100%;
-            height: 160px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            resize: none;
-            font-size: 15px;
-            box-sizing: border-box;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--color-ugt);
-            box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
-        }
-
-        .archivo {
-            margin-top: 15px;
-            text-align: left;
-        }
-
-        .archivo label {
-            font-size: 14px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .archivo small {
-            font-size: 12px;
-            color: #666;
-        }
-
-        input[type="file"] {
-            width: 100%;
-            font-size: 14px;
-        }
-
-        button {
+        /* Estenedor específico para el formulario insertado */
+        .tally-wrapper {
             margin-top: 20px;
-            width: 100%;
-            padding: 16px;
-            background: var(--color-ugt);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #8e0000;
-        }
-
-        #mensaje-exito {
-            display: none;
-            text-align: center;
-        }
-
-        #mensaje-exito h2 {
-            color: var(--color-exito);
-            font-size: 24px;
+            min-height: 400px;
         }
     </style>
 </head>
 <body>
 
 <div class="contenedor">
-
-    <!-- FORMULARIO -->
-    <div id="formulario-contenedor">
-        <div class="logo-contenedor">
-            <img src="logo.png" alt="Logo UGT El Corte Inglés">
-        </div>
-
-        <h1>BUZÓN ANÓNIMO</h1>
-
-        <p>
-            Este buzón es <strong>totalmente anónimo</strong>.  
-            No se recopilan nombres, correos ni datos identificativos.
-        </p>
-
-        <p>
-            Tu mensaje será recibido únicamente por la sección sindical.
-        </p>
-
-        <form
-            action="https://formsubmit.co/eci.laspalmas@fesmcugt.org"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
-            <!-- TEXTO -->
-            <textarea
-                name="mensaje"
-                placeholder="Escribe aquí tu situación, queja o propuesta..."
-                required
-            ></textarea>
-
-            <!-- ADJUNTO -->
-            <div class="archivo">
-                <label>Adjuntar archivo (opcional)</label>
-                <input
-                    type="file"
-                    name="adjunto"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                >
-                <small>No adjuntes documentos con datos personales si no es imprescindible.</small>
-            </div>
-
-            <!-- CONFIGURACIÓN FORMSUBMIT -->
-            <input type="hidden" name="_subject" value="Nuevo mensaje anónimo - Buzón UGT">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://ugtecicana.github.io/?enviado=1">
-
-            <button type="submit">Enviar con Seguridad Total</button>
-        </form>
+    <div class="logo-contenedor">
+        <img src="logo.png" alt="Logo UGT El Corte Inglés">
     </div>
 
-    <!-- MENSAJE DE ÉXITO -->
-    <div id="mensaje-exito">
-        <div class="logo-contenedor">
-            <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width:60%;">
-        </div>
-        <h2>¡Mensaje enviado con éxito!</h2>
-        <p>
-            Gracias por tu confianza.  
-            El mensaje ha sido recibido de forma totalmente anónima.
-        </p>
-        <button onclick="location.href='index.html'">Enviar otro mensaje</button>
+    <h1>BUZÓN ANÓNIMO</h1>
+    
+    <p>
+        A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
+    </p>
+
+    <p>
+        Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.
+    </p>
+
+    <p>
+        <strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Si quieres formar parte de nuestro equipo y dar un paso más, indícalo en tu mensaje o adjunta tu información.
+    </p>
+
+    <div class="tally-wrapper">
+        <iframe 
+            data-tally-src="https://tally.so/embed/RGdA7p?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+            loading="lazy" 
+            width="100%" 
+            height="486" 
+            frameborder="0" 
+            marginheight="0" 
+            marginwidth="0" 
+            title="Buzón UGT">
+        </iframe>
+        <script>
+            var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+        </script>
     </div>
-
-</div>
-
-<script>
-    // Mostrar mensaje de éxito si volvemos con ?enviado=1
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("enviado") === "1") {
-        document.getElementById("formulario-contenedor").style.display = "none";
-        document.getElementById("mensaje-exito").style.display = "block";
-    }
-</script>
+    </div>
 
 </body>
 </html>
