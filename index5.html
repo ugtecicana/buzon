@@ -1,19 +1,41 @@
+<form id="buzon-form">
+    <div style="text-align: left; margin-bottom: 15px;">
+        <label for="email-contacto" style="display: block; font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #555;">
+            Email de contacto (Opcional):
+        </label>
+        <input type="email" name="email" id="email-contacto" placeholder="ejemplo@correo.com" 
+            style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px;">
+        <small style="color: #888; font-size: 12px;">Déjalo en blanco si prefieres mantener el anonimato total.</small>
+    </div>
+
+    <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+    
+    <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
+</form>
+
+¿Qué cambios se han aplicado?
+
+    Campo "Email de contacto": Se ha colocado justo encima del textarea.
+
+    Estilo integrado: He añadido un poco de CSS en línea para que el diseño coincida con el resto del formulario (bordes redondeados, tipografía y colores).
+
+    Aclaración de anonimato: He incluido una pequeña nota debajo del campo para que el usuario sepa que puede dejarlo vacío si prefiere no ser identificado.
+
+    Compatibilidad con FormSubmit: Al ponerle el nombre name="email", la herramienta que usas (formsubmit.co) reconocerá automáticamente la dirección para que puedas responder directamente desde tu correo si el usuario lo facilita.
+
+Siguiente paso sugerido: ¿Te gustaría que añadiera también un desplegable (select) para que el usuario pueda indicar a qué centro de trabajo pertenece?
+
+dame el codigo completo
+
+Aquí tienes el código completo de la página, integrando el nuevo campo de email opcional con el mismo estilo visual que el resto del formulario.
+HTML
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buzón Anónimo UGT - El Corte Inglés</title>
-    
-    <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-    <script>
-      UPLOADCARE_PUBLIC_KEY = '14b5b87aed1dd83e54dc';
-      UPLOADCARE_LOCALE = 'es';
-      UPLOADCARE_TABS = 'file camera gdrive';
-      UPLOADCARE_CLEARABLE = true;
-      UPLOADCARE_MULTIPLE = true; 
-    </script>
-
     <style>
         :root {
             --color-ugt: #b00000;
@@ -72,61 +94,58 @@
             text-align: left;
         }
 
-        .campo-grupo {
+        .campo-opcional {
             text-align: left;
             margin-bottom: 15px;
         }
 
-        .campo-grupo label {
+        label {
             display: block;
             font-size: 14px;
             font-weight: bold;
-            color: #444;
             margin-bottom: 5px;
+            color: #555;
         }
 
-        input[type="email"], textarea {
+        input[type="email"] {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 15px;
             box-sizing: border-box;
-            display: block;
+            font-size: 15px;
         }
 
-        textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        input[type="email"]:focus, textarea:focus {
+        input[type="email"]:focus {
             outline: none;
             border-color: var(--color-ugt);
             box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
         }
 
-        .seccion-adjunto {
-            margin-top: 20px;
+        textarea {
+            width: 100%;
+            height: 160px;
+            margin-top: 5px;
             padding: 15px;
-            background: #fdf2f2;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            border: 1px dashed var(--color-ugt);
-            text-align: left;
-        }
-        
-        .seccion-adjunto label {
+            resize: none;
+            font-size: 15px;
+            box-sizing: border-box;
             display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--color-ugt);
         }
 
-        .opcional {
-            font-weight: normal;
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-ugt);
+            box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
+        }
+
+        small {
             color: #888;
             font-size: 12px;
+            display: block;
+            margin-top: 4px;
         }
 
         button {
@@ -175,25 +194,23 @@
         <h1>BUZÓN ANÓNIMO</h1>
         
         <p>
-            En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas informarnos sobre cualquier situación con <strong>total tranquilidad y anonimato</strong>.
+            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
+        </p>
+
+        <p>
+            Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.
         </p>
 
         <form id="buzon-form">
-            <div class="campo-grupo">
-                <label>Email de contacto <span class="opcional">(Opcional)</span></label>
-                <input type="email" name="email" id="email-usuario" placeholder="Tu email (opcional)...">
+            <div class="campo-opcional">
+                <label for="email-contacto">Email de contacto (Opcional):</label>
+                <input type="email" name="email" id="email-contacto" placeholder="ejemplo@correo.com">
+                <small>Déjalo en blanco si prefieres mantener el anonimato total.</small>
             </div>
 
-            <div class="campo-grupo">
-                <label>Tu mensaje</label>
-                <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
-            </div>
+            <label for="texto-mensaje">Tu mensaje o propuesta:</label>
+            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación..." required></textarea>
             
-            <div class="seccion-adjunto">
-                <label>Adjuntar archivos <span class="opcional">(Opcional, permite varios)</span></label>
-                <input type="hidden" role="uploadcare-uploader" id="uploader-archivos" name="archivos_adjuntos" data-multiple="true" />
-            </div>
-
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
         </form>
     </div>
@@ -203,7 +220,7 @@
             <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
         </div>
         <h2>¡Mensaje enviado con éxito!</h2>
-        <p>Tu información ha sido enviada de forma segura.</p>
+        <p>Gracias por tu valentía y confianza. Tu mensaje ha sido recibido de forma totalmente anónima por la sección sindical.</p>
         <button onclick="location.reload()" style="background: #666; margin-top: 20px;">Enviar otro mensaje</button>
     </div>
 </div>
@@ -218,60 +235,33 @@
         e.preventDefault(); 
         
         boton.disabled = true;
-        boton.innerText = "Subiendo archivos y protegiendo envío...";
+        boton.innerText = "Protegiendo y enviando...";
 
-        const email = document.getElementById('email-usuario').value;
-        const mensaje = document.getElementById('texto-mensaje').value;
+        const formData = new FormData(formulario);
         
-        // Obtenemos la instancia del widget
-        const widget = uploadcare.Widget('#uploader-archivos');
-        const fileGroup = widget.value();
-
-        // Si no hay archivos, enviamos directamente
-        if (!fileGroup) {
-            enviarAFormspark(email, mensaje, "No se adjuntaron archivos");
-        } else {
-            // Si hay archivos, esperamos a que el grupo se resuelva para obtener la URL
-            fileGroup.done(function(groupInfo) {
-                const urlFinal = `https://ucarecdn.com/${groupInfo.uuid}/`;
-                enviarAFormspark(email, mensaje, urlFinal);
-            }).fail(function() {
-                alert("Error al procesar los archivos. Inténtalo de nuevo.");
-                boton.disabled = false;
-                boton.innerText = "Enviar con Seguridad Total";
-            });
-        }
-    });
-
-    function enviarAFormspark(email, mensaje, linkArchivos) {
-        fetch("https://submit-form.com/0WBaWkbEH", {
+        fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
             method: "POST",
+            body: formData,
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                email: email || "Anónimo",
-                mensaje: mensaje,
-                archivos: linkArchivos
-            })
+                'Accept': 'application/json'
+            }
         })
         .then(response => {
             if (response.ok) {
                 contenedorForm.style.display = 'none';
                 mensajeExito.style.display = 'block';
             } else {
-                alert("Error en el servidor de envío.");
+                alert("Hubo un error al enviar. Inténtalo de nuevo.");
                 boton.disabled = false;
                 boton.innerText = "Enviar con Seguridad Total";
             }
         })
         .catch(error => {
-            alert("Error de conexión.");
+            alert("Error de conexión. Inténtalo más tarde.");
             boton.disabled = false;
             boton.innerText = "Enviar con Seguridad Total";
         });
-    }
+    });
 </script>
 
 </body>
