@@ -1,0 +1,72 @@
+<!-- Uploadcare -->
+<script>
+    UPLOADCARE_PUBLIC_KEY = "TU_PUBLIC_KEY";         // ← pon tu clave aquí
+    UPLOADCARE_EFFECTS = "crop,rotate,enhance";       // mejoras básicas
+    UPLOADCARE_AUTO_STORE = false;                    // evita que se guarde indefinidamente
+</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<style>
+    .uploadcare-widget button {
+        background:#b00000 !important;
+        color:white !important;
+        border-radius:6px;
+    }
+</style>
+
+<form id="buzon-form">
+    <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe tu situación o propuesta..." required></textarea>
+
+    <!-- Subida opcional (pdf + imágenes) -->
+    <input 
+        type="hidden" 
+        role="uploadcare-uploader" 
+        name="archivo"
+        data-clearable="true"
+        data-multiple="false"
+        data-images-only="false"
+        data-accept="application/pdf,image/*"
+        data-multiple-max="1"
+        data-preview-step="true"
+    />
+
+    <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
+</form>
+
+<script>
+document.getElementById('buzon-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById("boton-enviar");
+    btn.disabled = true;
+    btn.innerText = "Protegiendo y enviando...";
+
+    const formData = new FormData(this);
+
+    // Límite de expiración de archivos a 30 días (43200 min)
+    const fileUrl = formData.get("archivo");
+
+    if (fileUrl) {
+        const uuid = fileUrl.split('/').filter(Boolean).pop();
+        
+        await fetch(`https://api.uploadcare.com/files/${uuid}/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Uploadcare.Simple TU_PUBLIC_KEY:TU_PRIVATE_KEY" // ⚠ requiere clave privada en servidor
+            },
+            body: JSON.stringify({ 
+                "metadata": { "expire-in": "30d" }
+            })
+        });
+    }
+
+    fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org", {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+    })
+    .then(r => r.ok ? location.reload() : (alert("Error al enviar"), btn.disabled=false))
+    .catch(()=>{alert("Error de conexión"), btn.disabled=false});
+});
+</script>
