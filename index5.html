@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buzón Anónimo UGT - El Corte Inglés</title>
-
-    <!-- Uploadcare -->
+    
+    <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
     <script>
-        UPLOADCARE_PUBLIC_KEY = "14b5b87aed1dd83e54dc"; /* tu key correcta */
+      UPLOADCARE_PUBLIC_KEY = '14b5b87aed1dd83e54dc';
+      UPLOADCARE_LOCALE = 'es';
+      UPLOADCARE_TABS = 'file camera gdrive';
+      UPLOADCARE_CLEARABLE = true;
+      UPLOADCARE_MULTIPLE = true; 
     </script>
-    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
     <style>
         :root {
@@ -50,7 +53,7 @@
 
         .logo-contenedor img {
             width: 100%;
-            max-width: 100%;
+            max-width: 100%; 
             height: auto;
             display: block;
         }
@@ -69,22 +72,52 @@
             text-align: left;
         }
 
+        .campo-email {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            display: block;
+            font-family: inherit;
+        }
+
         textarea {
             width: 100%;
-            height: 160px;
-            margin-top: 10px;
+            height: 140px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
             resize: none;
             font-size: 15px;
             box-sizing: border-box;
+            display: block;
+            font-family: inherit;
         }
 
-        textarea:focus {
+        textarea:focus, .campo-email:focus {
             outline: none;
             border-color: var(--color-ugt);
             box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
+        }
+
+        .seccion-adjunto {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fdf2f2;
+            border-radius: 8px;
+            border: 1px dashed var(--color-ugt);
+            text-align: left;
+        }
+        
+        .seccion-adjunto label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--color-ugt);
         }
 
         button {
@@ -104,48 +137,34 @@
         button:hover { background: #8e0000; }
         button:disabled { background: #ccc; cursor: not-allowed; }
 
-        #mensaje-exito { display: none; text-align:center; padding:20px; }
-        #mensaje-exito h2 { color:var(--color-exito); font-size:24px; }
-
-        .label-archivo {
-            text-align:left;
-            margin-top:12px;
-            font-weight:bold;
-            font-size:14px;
-            margin-bottom:6px;
-        }
+        #mensaje-exito { display: none; text-align: center; padding: 20px; }
+        #mensaje-exito h2 { color: var(--color-exito); font-size: 24px; }
     </style>
 </head>
 <body>
 
 <div class="contenedor">
     <div id="formulario-contenedor">
-
         <div class="logo-contenedor">
             <img src="logo.png" alt="Logo UGT El Corte Inglés">
         </div>
 
         <h1>BUZÓN ANÓNIMO</h1>
-
-        <p>A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.</p>
-
-        <p>Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.</p>
-
-        <p><strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Necesitamos personas que, como tú, conocen el día a día del centro para <strong>defender nuestros derechos</strong>. Si quieres formar parte de nuestro equipo y <strong>dar un paso más</strong>, indícalo en tu mensaje.</p>
+        
+        <p>Canal <strong>100% privado</strong>. Si deseas que contactemos contigo, déjanos tu email (opcional).</p>
 
         <form id="buzon-form">
+            <input type="hidden" name="_subject" value="BUZON UGT">
+            <input type="hidden" name="_lang" value="es">
 
-            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+            <input type="email" name="Email_de_contacto" class="campo-email" placeholder="Email de contacto (opcional)">
 
-            <label class="label-archivo">Adjuntar archivo (opcional)</label>
-            <input 
-                type="hidden"
-                role="uploadcare-uploader"
-                name="archivo"
-                data-tabs="file camera"
-                data-multiple="false"
-                data-accept="application/pdf,image/*"
-            />
+            <textarea name="Mensaje_del_trabajador" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
+            
+            <div class="seccion-adjunto">
+                <label>Adjuntar imágenes o documentos (puedes elegir varios):</label>
+                <input type="hidden" role="uploadcare-uploader" name="Enlaces_a_archivos" data-multiple="true" />
+            </div>
 
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
         </form>
@@ -153,38 +172,47 @@
 
     <div id="mensaje-exito">
         <div class="logo-contenedor">
-            <img src="logo.png" alt="Logo UGT" style="width:60%;margin:auto;">
+            <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
         </div>
-        <h2>¡Mensaje enviado!</h2>
-        <p>Gracias por tu confianza. Tu comunicación ha sido recibida de forma anónima.</p>
-        <button onclick="location.reload()" style="background:#666;margin-top:20px;">Enviar otro mensaje</button>
+        <h2>¡Mensaje enviado con éxito!</h2>
+        <p>Gracias por tu confianza. Tu mensaje ha sido recibido de forma segura.</p>
+        <button onclick="location.reload()" style="background: #666; margin-top: 20px;">Enviar otro mensaje</button>
     </div>
 </div>
 
 <script>
-const formulario=document.getElementById('buzon-form');
-const contenedorForm=document.getElementById('formulario-contenedor');
-const mensajeExito=document.getElementById('mensaje-exito');
-const boton=document.getElementById('boton-enviar');
+    const formulario = document.getElementById('buzon-form');
+    const contenedorForm = document.getElementById('formulario-contenedor');
+    const mensajeExito = document.getElementById('mensaje-exito');
+    const boton = document.getElementById('boton-enviar');
 
-formulario.addEventListener('submit',e=>{
-    e.preventDefault();
-    boton.disabled=true; boton.innerText="Enviando...";
+    formulario.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        boton.disabled = true;
+        boton.innerText = "Protegiendo y enviando...";
 
-    fetch("https://formsubmit.co/ajax/eci.laspalmas@fesmcugt.org",{
-        method:"POST",
-        body:new FormData(formulario),
-        headers:{'Accept':'application/json'}
-    })
-    .then(r=>{
-        if(r.ok){ contenedorForm.style.display='none'; mensajeExito.style.display='block'; }
-        else{ alert("Error al enviar"); boton.disabled=false; boton.innerText="Enviar"; }
-    })
-    .catch(()=>{
-        alert("Error de conexión");
-        boton.disabled=false; boton.innerText="Enviar";
+        const formData = new FormData(formulario);
+        
+        fetch("https://submit-form.com/0WBaWkbEH", {
+            method: "POST",
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                contenedorForm.style.display = 'none';
+                mensajeExito.style.display = 'block';
+            } else {
+                alert("Hubo un error al enviar.");
+                boton.disabled = false;
+                boton.innerText = "Enviar con Seguridad Total";
+            }
+        })
+        .catch(error => {
+            alert("Error de conexión.");
+            boton.disabled = false;
+        });
     });
-});
 </script>
 
 </body>
