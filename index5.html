@@ -157,7 +157,7 @@
 <div class="contenedor">
     <div id="formulario-contenedor">
         <div class="logo-contenedor">
-            <img src="logo.png" alt="UGT Canarias El Corte Inglés">
+            <img src="logo.png" alt="Logo UGT El Corte Inglés">
         </div>
 
         <h1>BUZÓN ANÓNIMO</h1>
@@ -175,13 +175,19 @@
         </p>
 
         <form id="buzon-form">
+            <input type="hidden" name="_subject" value="BUZON ANONIMO UGT">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_language" value="es">
+            <input type="hidden" name="_captcha" value="false">
+
             <div class="campo-opcional">
                 <label for="email-contacto">Email de contacto (Opcional):</label>
-                <input type="email" name="email" id="email-contacto" placeholder="ejemplo@correo.com">
+                <input type="email" name="Correo_de_Contacto" id="email-contacto" placeholder="ejemplo@correo.com">
                 <small>Déjalo en blanco si prefieres mantener el anonimato total.</small>
             </div>
 
-            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu mensaje..." required></textarea>
+            <label for="texto-mensaje" style="display: none;">Mensaje</label>
+            <textarea name="Mensaje_Recibido" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
             
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
         </form>
