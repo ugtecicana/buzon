@@ -52,6 +52,8 @@
             color: var(--color-ugt);
             font-size: 24px;
             margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         p {
@@ -92,8 +94,7 @@
 
         textarea {
             width: 100%;
-            height: 160px;
-            margin-top: 5px;
+            height: 150px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -156,7 +157,7 @@
 <div class="contenedor">
     <div id="formulario-contenedor">
         <div class="logo-contenedor">
-            <img src="logo.png" alt="Logo UGT El Corte Inglés">
+            <img src="logo.png" alt="UGT Canarias El Corte Inglés">
         </div>
 
         <h1>BUZÓN ANÓNIMO</h1>
@@ -169,6 +170,10 @@
             Es un canal <strong>100% privado y seguro</strong>. <strong>No estás solo</strong>: usamos tu testimonio para defender los derechos de toda la plantilla <strong>sin exponerte a ti</strong>.
         </p>
 
+        <p>
+            <strong>Juntos somos más fuertes. Únete como delegado/a</strong>. Necesitamos personas que, como tú, conocen el día a día del centro para <strong>defender nuestros derechos</strong>. Si quieres formar parte de nuestro equipo y <strong>dar un paso más</strong>, indícalo en tu mensaje.
+        </p>
+
         <form id="buzon-form">
             <div class="campo-opcional">
                 <label for="email-contacto">Email de contacto (Opcional):</label>
@@ -176,8 +181,7 @@
                 <small>Déjalo en blanco si prefieres mantener el anonimato total.</small>
             </div>
 
-            <label for="texto-mensaje">Tu mensaje o propuesta:</label>
-            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación..." required></textarea>
+            <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu mensaje..." required></textarea>
             
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
         </form>
