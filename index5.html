@@ -11,6 +11,8 @@
       UPLOADCARE_LOCALE = 'es';
       UPLOADCARE_TABS = 'file camera gdrive';
       UPLOADCARE_CLEARABLE = true;
+      // Esto permite que se seleccionen varios archivos a la vez
+      UPLOADCARE_MULTIPLE = true; 
     </script>
 
     <style>
@@ -71,26 +73,32 @@
             text-align: left;
         }
 
-        textarea {
+        textarea, .input-email {
             width: 100%;
-            height: 160px;
-            margin-top: 10px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            resize: none;
             font-size: 15px;
             box-sizing: border-box;
             display: block;
+            margin-top: 10px;
         }
 
-        textarea:focus {
+        textarea {
+            height: 160px;
+            resize: none;
+        }
+
+        .input-email {
+            margin-bottom: 15px;
+        }
+
+        textarea:focus, .input-email:focus {
             outline: none;
             border-color: var(--color-ugt);
             box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
         }
 
-        /* 2. ESTILO PARA EL ADJUNTAR ARCHIVO */
         .seccion-adjunto {
             margin-top: 20px;
             padding: 15px;
@@ -141,6 +149,12 @@
             color: var(--color-exito);
             font-size: 24px;
         }
+
+        .opcional-texto {
+            font-size: 12px;
+            color: #888;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -154,15 +168,20 @@
         <h1>BUZÓN ANÓNIMO</h1>
         
         <p>
-            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
+            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas informar sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
         </p>
 
         <form id="buzon-form">
+            <div style="text-align: left;">
+                <label style="font-size: 14px; font-weight: bold; color: #444;">Email de contacto <span class="opcional-texto">(Opcional)</span>:</label>
+                <input type="email" name="email" class="input-email" placeholder="Tu email si deseas recibir respuesta...">
+            </div>
+
             <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
             
             <div class="seccion-adjunto">
-                <label>Adjuntar imagen o documento (Opcional):</label>
-                <input type="hidden" role="uploadcare-uploader" name="link_archivo" />
+                <label>Adjuntar imágenes o documentos <span class="opcional-texto">(Puedes subir varios)</span>:</label>
+                <input type="hidden" role="uploadcare-uploader" name="links_archivos" data-multiple="true" />
             </div>
 
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
@@ -193,7 +212,6 @@
 
         const formData = new FormData(formulario);
         
-        // 4. ENVÍO A TU FORMSPARK (ID: 0WBaWkbEH)
         fetch("https://submit-form.com/0WBaWkbEH", {
             method: "POST",
             body: formData,
