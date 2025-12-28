@@ -11,8 +11,6 @@
       UPLOADCARE_LOCALE = 'es';
       UPLOADCARE_TABS = 'file camera gdrive';
       UPLOADCARE_CLEARABLE = true;
-      // Permite seleccionar varios archivos a la vez
-      UPLOADCARE_MULTIPLE = true; 
     </script>
 
     <style>
@@ -73,22 +71,10 @@
             text-align: left;
         }
 
-        /* Estilos para los campos de entrada */
-        .campo-email {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            box-sizing: border-box;
-            display: block;
-            font-family: inherit;
-        }
-
         textarea {
             width: 100%;
-            height: 140px;
+            height: 160px;
+            margin-top: 10px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -96,15 +82,15 @@
             font-size: 15px;
             box-sizing: border-box;
             display: block;
-            font-family: inherit;
         }
 
-        textarea:focus, .campo-email:focus {
+        textarea:focus {
             outline: none;
             border-color: var(--color-ugt);
             box-shadow: 0 0 5px rgba(176, 0, 0, 0.2);
         }
 
+        /* 2. ESTILO PARA EL ADJUNTAR ARCHIVO */
         .seccion-adjunto {
             margin-top: 20px;
             padding: 15px;
@@ -136,11 +122,25 @@
             transition: all 0.3s ease;
         }
 
-        button:hover { background: #8e0000; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
+        button:hover {
+            background: #8e0000;
+        }
 
-        #mensaje-exito { display: none; text-align: center; padding: 20px; }
-        #mensaje-exito h2 { color: var(--color-exito); font-size: 24px; }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        #mensaje-exito {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #mensaje-exito h2 {
+            color: var(--color-exito);
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -153,16 +153,16 @@
 
         <h1>BUZÓN ANÓNIMO</h1>
         
-        <p>Este es un canal <strong>100% privado</strong>. Si deseas que contactemos contigo, déjanos tu email (opcional).</p>
+        <p>
+            A veces, <strong>contar lo que pasa en el trabajo</strong> es el primer paso para solucionarlo. En la sección sindical de <strong>UGT</strong> hemos creado este buzón para que puedas desahogarte o informarnos sobre cualquier <strong>situación injusta con total tranquilidad</strong>.
+        </p>
 
         <form id="buzon-form">
-            <input type="email" name="email_contacto" class="campo-email" placeholder="Email de contacto (opcional)">
-
             <textarea name="mensaje" id="texto-mensaje" placeholder="Escribe aquí tu situación o propuesta..." required></textarea>
             
             <div class="seccion-adjunto">
-                <label>Adjuntar imágenes o documentos (puedes elegir varios):</label>
-                <input type="hidden" role="uploadcare-uploader" name="links_archivos" data-multiple="true" />
+                <label>Adjuntar imagen o documento (Opcional):</label>
+                <input type="hidden" role="uploadcare-uploader" name="link_archivo" />
             </div>
 
             <button type="submit" id="boton-enviar">Enviar con Seguridad Total</button>
@@ -174,7 +174,7 @@
             <img src="logo.png" alt="Logo UGT El Corte Inglés" style="width: 60%; margin: 0 auto;">
         </div>
         <h2>¡Mensaje enviado con éxito!</h2>
-        <p>Gracias por tu confianza. Tu mensaje ha sido recibido.</p>
+        <p>Gracias por tu valentía y confianza. Tu mensaje ha sido recibido de forma totalmente anónima.</p>
         <button onclick="location.reload()" style="background: #666; margin-top: 20px;">Enviar otro mensaje</button>
     </div>
 </div>
@@ -187,29 +187,34 @@
 
     formulario.addEventListener('submit', function(e) {
         e.preventDefault(); 
+        
         boton.disabled = true;
         boton.innerText = "Protegiendo y enviando...";
 
         const formData = new FormData(formulario);
         
+        // 4. ENVÍO A TU FORMSPARK (ID: 0WBaWkbEH)
         fetch("https://submit-form.com/0WBaWkbEH", {
             method: "POST",
             body: formData,
-            headers: { 'Accept': 'application/json' }
+            headers: {
+                'Accept': 'application/json'
+            }
         })
         .then(response => {
             if (response.ok) {
                 contenedorForm.style.display = 'none';
                 mensajeExito.style.display = 'block';
             } else {
-                alert("Hubo un error al enviar.");
+                alert("Hubo un error al enviar. Inténtalo de nuevo.");
                 boton.disabled = false;
                 boton.innerText = "Enviar con Seguridad Total";
             }
         })
         .catch(error => {
-            alert("Error de conexión.");
+            alert("Error de conexión. Inténtalo más tarde.");
             boton.disabled = false;
+            boton.innerText = "Enviar con Seguridad Total";
         });
     });
 </script>
