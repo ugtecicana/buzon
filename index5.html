@@ -11,7 +11,7 @@
       UPLOADCARE_LOCALE = 'es';
       UPLOADCARE_TABS = 'file camera gdrive';
       UPLOADCARE_CLEARABLE = true;
-      UPLOADCARE_MULTIPLE = true; // Habilita selección múltiple
+      UPLOADCARE_MULTIPLE = true; 
     </script>
 
     <style>
@@ -181,7 +181,7 @@
         <form id="buzon-form">
             <div class="campo-grupo">
                 <label>Email de contacto <span class="opcional">(Opcional)</span></label>
-                <input type="email" name="email" id="email-usuario" placeholder="Para recibir respuesta (opcional)...">
+                <input type="email" name="email" id="email-usuario" placeholder="Tu email (opcional)...">
             </div>
 
             <div class="campo-grupo">
@@ -218,25 +218,32 @@
         e.preventDefault(); 
         
         boton.disabled = true;
-        boton.innerText = "Enviando de forma segura...";
+        boton.innerText = "Subiendo archivos y protegiendo envío...";
 
         const email = document.getElementById('email-usuario').value;
         const mensaje = document.getElementById('texto-mensaje').value;
         
-        // Obtener el widget correctamente
+        // Obtenemos la instancia del widget
         const widget = uploadcare.Widget('#uploader-archivos');
-        const infoGrupo = widget.value(); 
-        
-        // CORRECCIÓN: Si es un grupo, infoGrupo es un objeto. 
-        // Extraemos el UUID para formar el link correctamente.
-        let linkFinal = "No se adjuntaron archivos";
-        
-        if (infoGrupo) {
-            // Si es múltiple, el valor puede ser un objeto o el UUID seguido de ~ (número de archivos)
-            const uuid = infoGrupo.uuid || infoGrupo;
-            linkFinal = `https://ucarecdn.com/${uuid}/`;
-        }
+        const fileGroup = widget.value();
 
+        // Si no hay archivos, enviamos directamente
+        if (!fileGroup) {
+            enviarAFormspark(email, mensaje, "No se adjuntaron archivos");
+        } else {
+            // Si hay archivos, esperamos a que el grupo se resuelva para obtener la URL
+            fileGroup.done(function(groupInfo) {
+                const urlFinal = `https://ucarecdn.com/${groupInfo.uuid}/`;
+                enviarAFormspark(email, mensaje, urlFinal);
+            }).fail(function() {
+                alert("Error al procesar los archivos. Inténtalo de nuevo.");
+                boton.disabled = false;
+                boton.innerText = "Enviar con Seguridad Total";
+            });
+        }
+    });
+
+    function enviarAFormspark(email, mensaje, linkArchivos) {
         fetch("https://submit-form.com/0WBaWkbEH", {
             method: "POST",
             headers: {
@@ -246,7 +253,7 @@
             body: JSON.stringify({
                 email: email || "Anónimo",
                 mensaje: mensaje,
-                archivos: linkFinal
+                archivos: linkArchivos
             })
         })
         .then(response => {
@@ -254,7 +261,7 @@
                 contenedorForm.style.display = 'none';
                 mensajeExito.style.display = 'block';
             } else {
-                alert("Error al enviar. Por favor, inténtalo de nuevo.");
+                alert("Error en el servidor de envío.");
                 boton.disabled = false;
                 boton.innerText = "Enviar con Seguridad Total";
             }
@@ -264,7 +271,7 @@
             boton.disabled = false;
             boton.innerText = "Enviar con Seguridad Total";
         });
-    });
+    }
 </script>
 
 </body>
