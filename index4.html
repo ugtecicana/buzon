@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzón Anónimo UGT - El Corte Inglés</title>
+    
+    <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    <script>
+      UPLOADCARE_PUBLIC_KEY = '14b5b87aed1dd83e54dc';
+      UPLOADCARE_LOCALE = 'es';
+      UPLOADCARE_TABS = 'file camera gdrive';
+      UPLOADCARE_CLEARABLE = true;
+    </script>
+
+    <style>
+        :root {
+            --color-ugt: #b00000;
+            --bg-body: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-body);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 6px solid var(--color-ugt);
+            text-align: center;
+        }
+
+        .logo-contenedor img {
+            width: 100%;
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--color-ugt);
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        /* Estilo para la sección de archivos */
+        .upload-section {
+            background: #fdf2f2;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--color-ugt);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .upload-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--color-ugt);
+            font-size: 13px;
+        }
+
+        .btn-enviar {
+            background: var(--color-ugt);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn-enviar:hover {
+            background: #8e0000;
+        }
+
+        /* Personalización del botón de Uploadcare para que no desentone */
+        .uploadcare--widget__button_type_open {
+            background-color: #666 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div class="logo-contenedor">
+        <img src="logo.png" alt="Logo UGT">
+    </div>
+
+    <h1>BUZÓN ANÓNIMO</h1>
+    
+    <p>Informa sobre cualquier situación injusta con total tranquilidad. Este canal es <strong>100% privado y seguro</strong>.</p>
+
+    <form action="https://submit-form.com/0WBaWkbEH" method="POST">
+        
+        <input type="hidden" name="_next" value="https://tuweb.com/gracias.html" />
+
+        <input type="email" name="email" placeholder="Tu Email (opcional por si quieres respuesta)">
+        
+        <textarea name="mensaje" rows="4" placeholder="Describe aquí la situación..." required></textarea>
+
+        <div class="upload-section">
+            <label>Adjuntar pruebas o documentos (PDF, fotos, etc.):</label>
+            <input type="hidden" role="uploadcare-uploader" name="archivo_adjunto" />
+        </div>
+
+        <button type="submit" class="btn-enviar">ENVIAR CON SEGURIDAD TOTAL</button>
+    </form>
