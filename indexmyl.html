@@ -25,7 +25,6 @@
             text-align: center;
             border-top: 8px solid #e30613;
         }
-        /* Ajuste del Logo corregido */
         .logo-img {
             width: 100%;
             max-width: 280px; 
@@ -60,12 +59,21 @@
             font-size: 16px;
             transition: all 0.2s ease;
             border: 1px solid #ddd;
+            position: relative;
         }
         .btn:active {
             transform: scale(0.97);
             background-color: #f9f9f9;
         }
-        /* Colores laterales */
+        /* Iconos de colores redondos */
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        /* Bordes laterales */
         .whatsapp { border-left: 6px solid #25D366; }
         .telegram { border-left: 6px solid #0088cc; }
         .instagram { border-left: 6px solid #E1306C; }
@@ -90,23 +98,23 @@
         <p>Únete a nuestras redes para estar informado:</p>
 
         <a href="https://whatsapp.com/channel/0029VbBfkCO6hENt9SVIcg3G" class="btn whatsapp">
-            WhatsApp (Canal)
+            <span class="dot" style="background-color: #25D366;"></span> WhatsApp (Canal)
         </a>
 
         <a href="https://t.me/+1CIAepkdRYoxYTRk" class="btn telegram">
-            Telegram
+            <span class="dot" style="background-color: #0088cc;"></span> Telegram
         </a>
 
         <a href="https://www.instagram.com/ugt.eci.canarias/" class="btn instagram">
-            Instagram
+            <span class="dot" style="background-color: #E1306C;"></span> Instagram
         </a>
 
         <a href="https://www.facebook.com/people/UGT-ECI-Centro-Mesa-y-Lopez/61584446627206/" class="btn facebook">
-            Facebook
+            <span class="dot" style="background-color: #1877F2;"></span> Facebook
         </a>
 
         <a href="https://ugtecicana.github.io/buzon/" class="btn buzon">
-            Buzón Anónimo
+            <span class="dot" style="background-color: #444;"></span> Buzón Anónimo
         </a>
 
         <div class="footer">
